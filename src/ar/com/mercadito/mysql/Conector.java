@@ -54,16 +54,18 @@ public class Conector {
             estaConectado = false;
         }
     }
-    public String consultar(){
+    //---------------------------------------------------------------------------------------------
+    public String consultar(String etiqueta,String etiqueta2){
         String cadena = "";
+
         abrirConeccion();
         if(estaConectado){
             try {
                 statement = connection.createStatement();
-                String sql = null;
-                sql = "SELECT * FROM `supermark`.`users_db` WHERE user = 'flavio'";
+                String sql = "";
+                sql = "SELECT * FROM supermark.users_db;";
                 resultSet = statement.executeQuery(sql);
-                if (resultSet.next()) cadena = extraeDatos("password");
+                if (resultSet.next()) cadena = extraeDatos(etiqueta2);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -72,17 +74,38 @@ public class Conector {
         limpiar();
         return cadena;
     }
+    //---------------------------------------------------------------------------------------------
+    public void guardarUsuario(String user, String password){
+        abrirConeccion();
+        if(estaConectado){
+            try {
+                statement = connection.createStatement();
+                String sql = "";
+                sql = "INSERT INTO `supermark`.`users_db` (id,user,password,type) VALUES(0,'" + user + "', '" + password + "',0)";
+                statement.executeUpdate(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //---------------------------------------------------------------------------------------------
     private String extraeDatos(String label){
         //PASO 3: Extraer datos de un ResulSet
-        String cadena;
+        String cadena,a,b,c,j;
         cadena = "";
         try {
-            cadena = resultSet.getString(label);
+            resultSet.next();
+            j = resultSet.getString("id");
+            a = resultSet.getString("user");
+            b = resultSet.getString("password");
+            c = resultSet.getString("type");
+            cadena = j+"/"+a+"/"+b+"/"+c;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return cadena;
     }
+    //---------------------------------------------------------------------------------------------
     private void limpiar(){
     //PASO4: Entorno de Limpieza
         try {
@@ -104,6 +127,6 @@ public class Conector {
                 se.printStackTrace();
             }
         }
-        System.gc();
+        //System.gc();
     }
 }

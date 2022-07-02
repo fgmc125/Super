@@ -8,7 +8,7 @@ public class Application {
 
     public void inicio(){
         Conector conector = new Conector();
-        JOptionPane.showMessageDialog(null, conector.consultar());
+        JOptionPane.showMessageDialog(null, conector.consultar("admin", "type"));
     }
 
     public final static void main(String[] arg){
