@@ -54,6 +54,7 @@ public class Conector {
             estaConectado = false;
         }
     }
+
     //---------------------------------------------------------------------------------------------
     public String consultar(String etiqueta,String etiqueta2){
         String cadena = "";
@@ -106,6 +107,7 @@ public class Conector {
         return cadena;
     }
     //---------------------------------------------------------------------------------------------
+
     private void limpiar(){
     //PASO4: Entorno de Limpieza
         try {
